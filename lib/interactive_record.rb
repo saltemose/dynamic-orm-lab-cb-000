@@ -7,4 +7,19 @@ class InteractiveRecord
     self.to_s.downcase.pluralize
   end
 
+  def self.column_names
+    DB[:conn].results_as_hash = true
+    sql = <<-SQL
+      pragma table_info('#{table_name}')
+    SQL
+
+    column_names = []
+    table_info = DB[:conn].execute(sql)
+    table_info.each do |column|
+      column_names << column["name"]
+    end
+
+    column_names
+  end
+
 end
