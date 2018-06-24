@@ -64,8 +64,8 @@ class InteractiveRecord
   end
 
   def self.find_by(attribute)
-    key = attribute[0]
-    value = attribute[1]
+    key = attribute.keys[0]
+    value = attribute.values[0]
 
     sql = <<-SQL
       SELECT * FROM #{self.table_name} WHERE #{key} = '#{value}'
